@@ -8,7 +8,7 @@ public abstract class Feels implements Feeling {
 
     Feels() {
         this.date = new Date();
-        this.comment = "Default";
+        this.comment = "";
     }
 
     Feels(String comment) {

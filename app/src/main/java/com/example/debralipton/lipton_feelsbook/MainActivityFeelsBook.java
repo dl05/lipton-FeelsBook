@@ -31,6 +31,8 @@ public class MainActivityFeelsBook extends AppCompatActivity {
     private static final String FILENAME = "file.sav";
     private EditText bodyText;
     private ListView feelingHistory;
+    boolean loveCheck = false;
+
 
     ArrayList<Feels> feelingList;
     ArrayAdapter<Feels> adapter;
@@ -42,18 +44,26 @@ public class MainActivityFeelsBook extends AppCompatActivity {
 
         bodyText = (EditText) findViewById(R.id.editComment);
         Button submitButton = (Button) findViewById(R.id.submitButton);
-        CheckBox LoveBox = (CheckBox) findViewById(R.id.LoveBox);
+
+        final CheckBox LoveCheck = (CheckBox) findViewById(R.id.LoveBox);
+        final CheckBox JoyCheck = (CheckBox) findViewById(R.id.JoyBox);
+        CheckBox FearBox = (CheckBox) findViewById(R.id.FearBox);
+        CheckBox AngerBox = (CheckBox) findViewById(R.id.AngerBox);
+        CheckBox SadnessBox = (CheckBox) findViewById(R.id.SadnessBox);
+        CheckBox SurpriseBox = (CheckBox) findViewById(R.id.SurpriseBox);
+
 
         feelingHistory = (ListView) findViewById(R.id.feelingHistory);
-
+/*
         LoveBox.setOnClickListener(new View.OnClickListener() {
                                        public void onClick(View v) {
                                            setResult(RESULT_OK);
                                            switch (v.getId()) {
                                                case R.id.LoveBox:
-                                                   System.out.println("Checked");                                           }
+                                                   System.out.println("Love");
+                                                   loveCheck = true;}
                                        }
-                                   });
+                                   }); */
 
         submitButton.setOnClickListener(new View.OnClickListener() {
 
@@ -63,9 +73,17 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 setResult(RESULT_OK);
                 String text = bodyText.getText().toString();
 
+                if(LoveCheck.isChecked()) {
+                    Feels newFeeling = new Love(text);
+                    feelingList.add(newFeeling);
+                    System.out.println("Love");
+                }
+                if(JoyCheck.isChecked()) {
+                    Feels newFeeling = new Joy(text);
+                    feelingList.add(newFeeling);
+                    System.out.println("Joy");
+                }
 
-                Feels newFeeling = new Love(text);
-                feelingList.add(newFeeling);
                 //tell adapter that something has changed to refresh list
                 saveInFile();
                 adapter.notifyDataSetChanged();

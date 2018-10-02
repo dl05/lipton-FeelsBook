@@ -1,18 +1,26 @@
 package com.example.debralipton.lipton_feelsbook;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,6 +32,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 public class MainActivityFeelsBook extends AppCompatActivity {
@@ -32,7 +41,6 @@ public class MainActivityFeelsBook extends AppCompatActivity {
     private EditText bodyText;
     private ListView feelingHistory;
     boolean loveCheck = false;
-
 
     ArrayList<Feels> feelingList;
     ArrayAdapter<Feels> adapter;
@@ -46,6 +54,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         Button submitButton = (Button) findViewById(R.id.submitButton);
 
         final CheckBox LoveCheck = (CheckBox) findViewById(R.id.LoveBox);
+        final TextView loveCount = (TextView) findViewById(R.id.loveNumber);
         final CheckBox JoyCheck = (CheckBox) findViewById(R.id.JoyBox);
         CheckBox FearBox = (CheckBox) findViewById(R.id.FearBox);
         CheckBox AngerBox = (CheckBox) findViewById(R.id.AngerBox);
@@ -76,6 +85,9 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 if(LoveCheck.isChecked()) {
                     Feels newFeeling = new Love(text);
                     feelingList.add(newFeeling);
+                    int num = (newFeeling.getCount());
+                    loveCount.setText(Integer.toString(num));
+                    loveCount.setText(R.string.loveNumber);
                     System.out.println("Love");
                 }
                 if(JoyCheck.isChecked()) {
@@ -90,6 +102,41 @@ public class MainActivityFeelsBook extends AppCompatActivity {
 
             }
         });
+
+        feelingHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Toast.makeText(MainActivityFeelsBook.this, "CHECK", Toast.LENGTH_LONG).show();
+
+                Feeling feeling = feelingList.get(position);
+                AlertDialog.Builder adb = new AlertDialog.Builder(MainActivityFeelsBook.this);
+                adb.setMessage("Edit/Delete " + feeling.toString()+ "?");
+                adb.setCancelable(true);
+                final int finalPosition = position;
+                adb.setPositiveButton("Edit/Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditDelete(feelingList.get(finalPosition).toString(), finalPosition);
+                        //Feeling feeling = feelingList.get(finalPosition);
+                        //feelingList.remove(feeling);
+                    }
+                });
+
+                adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                adb.show();
+                System.out.println(feeling);
+                //feelingList.remove(feeling);
+                saveInFile();
+                adapter.notifyDataSetChanged();
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -105,7 +152,6 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         try {
             FileInputStream fis = openFileInput(FILENAME);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-
             Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Love>>(){}.getType();
             feelingList = gson.fromJson(in, listType);
@@ -128,6 +174,18 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void EditDelete(String Item, final int index) {
+        final Dialog editDel = new Dialog(MainActivityFeelsBook.this);
+        editDel.setTitle("Edit/Delete");
+        editDel.setContentView(R.layout.edit_delete);
+        Feels feeling = feelingList.get(index);
+        Date date = feeling.getDate();
+        System.out.println(date);
+        EditText Date = editDel.findViewById(R.id.changedate);
+        Date.setText(date.toString());
+        editDel.show();
     }
 
 

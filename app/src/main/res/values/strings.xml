@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">lipton-FeelsBook</string>
+    <string name="loveNumber">0</string>
 </resources>

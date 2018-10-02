@@ -10,15 +10,18 @@
     <ListView
         android:id="@+id/feelingHistory"
         android:layout_width="fill_parent"
-        android:layout_height="263dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="1dp"
         android:layout_weight="1"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,8 +35,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Optional Comment"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/submitButton"
         app:layout_constraintHorizontal_bias="0.5"
@@ -63,19 +66,17 @@
         android:checked="false"
         android:text="Love"
         app:layout_constraintBottom_toTopOf="@+id/AngerBox"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/JoyBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:text="Joy"
         app:layout_constraintBottom_toTopOf="@+id/SadnessBox"
-        app:layout_constraintStart_toEndOf="@+id/LoveBox" />
+        app:layout_constraintStart_toEndOf="@+id/loveNumber" />
 
     <CheckBox
         android:id="@+id/SurpriseBox"
@@ -114,9 +115,8 @@
         android:id="@+id/FearBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:text="Fear"
         app:layout_constraintBottom_toTopOf="@+id/SurpriseBox"
         app:layout_constraintStart_toEndOf="@+id/JoyBox" />
@@ -131,4 +131,20 @@
         android:text="How do you feel today? :"
         app:layout_constraintBottom_toTopOf="@+id/LoveBox"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/loveNumber"
+        android:layout_width="14dp"
+        android:layout_height="22dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/LoveBox"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left" />
 </android.support.constraint.ConstraintLayout>

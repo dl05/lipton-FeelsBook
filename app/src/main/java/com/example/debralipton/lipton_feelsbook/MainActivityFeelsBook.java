@@ -83,7 +83,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 String text = bodyText.getText().toString();
 
                 if(LoveCheck.isChecked()) {
-                    Feels newFeeling = new Love(text);
+                    Feels newFeeling = new Love(text, "Love");
                     feelingList.add(newFeeling);
                     int num = (newFeeling.getCount());
                     loveCount.setText(Integer.toString(num));
@@ -91,7 +91,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                     System.out.println("Love");
                 }
                 if(JoyCheck.isChecked()) {
-                    Feels newFeeling = new Joy(text);
+                    Feels newFeeling = new Joy(text, "Joy");
                     feelingList.add(newFeeling);
                     System.out.println("Joy");
                 }
@@ -106,19 +106,21 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         feelingHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(MainActivityFeelsBook.this, "CHECK", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivityFeelsBook.this, "Edit/Delete Entry", Toast.LENGTH_LONG).show();
 
                 Feeling feeling = feelingList.get(position);
                 AlertDialog.Builder adb = new AlertDialog.Builder(MainActivityFeelsBook.this);
-                adb.setMessage("Edit/Delete " + feeling.toString()+ "?");
+                adb.setMessage("Edit/Delete " + feeling.toString()+ "  ?");
                 adb.setCancelable(true);
                 final int finalPosition = position;
                 adb.setPositiveButton("Edit/Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        EditDelete(feelingList.get(finalPosition).toString(), finalPosition);
+                        System.out.println(feelingList);
+                        EditDelete(finalPosition);
                         //Feeling feeling = feelingList.get(finalPosition);
                         //feelingList.remove(feeling);
+                        //System.out.println(feelingList);
                     }
                 });
 
@@ -130,9 +132,8 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 });
                 adb.show();
                 System.out.println(feeling);
-                //feelingList.remove(feeling);
-                saveInFile();
-                adapter.notifyDataSetChanged();
+                //saveInFile();
+                //adapter.notifyDataSetChanged();
                 return false;
             }
         });
@@ -176,17 +177,63 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         }
     }
 
-    public void EditDelete(String Item, final int index) {
+    public void EditDelete(final int index) {
         final Dialog editDel = new Dialog(MainActivityFeelsBook.this);
         editDel.setTitle("Edit/Delete");
         editDel.setContentView(R.layout.edit_delete);
-        Feels feeling = feelingList.get(index);
+        final Feels feeling = feelingList.get(index);
         Date date = feeling.getDate();
-        System.out.println(date);
-        EditText Date = editDel.findViewById(R.id.changedate);
+        final EditText Date = editDel.findViewById(R.id.changedate);
         Date.setText(date.toString());
+
+        final String oldComment = feeling.getComment();
+        final EditText comment = editDel.findViewById(R.id.changecomment);
+        comment.setText(oldComment.toString());
+
+        String oldEmotion = feeling.getEmotion();
+        final EditText emotion = editDel.findViewById(R.id.changefeeling);
+        emotion.setText(oldEmotion.toString());
+
+        Button updateEntry = (Button) editDel.findViewById(R.id.finished);
+        Button delEntry = (Button) editDel.findViewById(R.id.Delete);
+        updateEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                String newComment = comment.getText().toString();
+                //System.out.println("old comment" + oldComment.toString());
+                System.out.println("comment " + comment.getText().toString());
+                feeling.setComment(newComment);
+                final Feels newFeels = feeling;
+                feelingList.get(index).setComment(newComment);
+                //feelingList.set(index, newFeels);
+                System.out.println("Feeling is now: " + feeling.getComment());
+                System.out.println("newFeels is now: " + newFeels.getComment());
+                System.out.println("List is:  " + feelingList);
+                //feelingList.set(index, (Feels) Date.getText());
+                //feelingList.set(index, (Feels) emotion.getText());
+                adapter.notifyDataSetChanged();
+                saveInFile();
+                System.out.println(feelingList);
+                editDel.dismiss();
+
+            }
+    });
+
+        delEntry.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                feelingList.remove(feeling);
+                adapter.notifyDataSetChanged();
+                saveInFile();
+                System.out.println(feelingList);
+                editDel.dismiss();
+            }
+        });
         editDel.show();
+
     }
-
-
 }

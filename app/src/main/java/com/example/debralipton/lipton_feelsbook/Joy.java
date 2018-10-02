@@ -4,8 +4,8 @@ public class Joy extends Feels {
     static private int joyCounter;
 
 
-    public Joy(String comment) {
-        super(comment);
+    public Joy(String comment, String emotion) {
+        super(comment, emotion);
         joyCounter++;
         System.out.println(joyCounter);
 

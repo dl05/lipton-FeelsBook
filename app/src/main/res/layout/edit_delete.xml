@@ -10,8 +10,17 @@
         android:id="@+id/oldItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Enter changes to entry:"
         app:layout_constraintTop_toTopOf="parent"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/dateTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date:"
+        app:layout_constraintTop_toBottomOf="@+id/oldItem"
         android:textSize="16sp"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -19,23 +28,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/changedate"
-        app:layout_constraintTop_toBottomOf="@+id/oldItem"
+        app:layout_constraintTop_toBottomOf="@+id/dateTitle"
 
         />
+
+    <TextView
+        android:id="@+id/commentTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Comment:"
+        app:layout_constraintTop_toBottomOf="@+id/changedate"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/changecomment"
-        app:layout_constraintTop_toBottomOf="@+id/changedate"
-
+        app:layout_constraintTop_toBottomOf="@+id/commentTitle"
         />
+
+    <TextView
+        android:id="@+id/feelingTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Feeling:"
+        app:layout_constraintTop_toBottomOf="@+id/changecomment"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="0dp" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/changefeeling"
-        app:layout_constraintTop_toBottomOf="@+id/changecomment"
-
+        app:layout_constraintTop_toBottomOf="@+id/feelingTitle"
         />
     <Button
         android:layout_width="match_parent"
@@ -51,4 +77,5 @@
         android:text="Delete Feeling"
         app:layout_constraintTop_toBottomOf="@+id/finished"
         />
+
 </android.support.constraint.ConstraintLayout>

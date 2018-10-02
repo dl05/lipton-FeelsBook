@@ -10,8 +10,8 @@ public class Love extends Feels {
     static int loveCounter;
 
 
-    public Love(String comment) {
-        super(comment);
+    public Love(String comment, String emotion) {
+        super(comment, emotion);
         loveCounter++;
         //loveCount =  loveCount.findViewById(R.id.loveNumber);
         //loveCount.setText(Integer.toString(loveCounter));

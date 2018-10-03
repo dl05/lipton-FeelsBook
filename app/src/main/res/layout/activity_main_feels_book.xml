@@ -72,8 +72,8 @@
         android:id="@+id/JoyBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:text="Joy"
         app:layout_constraintBottom_toTopOf="@+id/SadnessBox"
         app:layout_constraintStart_toEndOf="@+id/loveNumber" />
@@ -115,8 +115,6 @@
         android:id="@+id/FearBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
         android:text="Fear"
         app:layout_constraintBottom_toTopOf="@+id/SurpriseBox"
         app:layout_constraintStart_toEndOf="@+id/JoyBox" />
@@ -134,8 +132,8 @@
 
     <TextView
         android:id="@+id/loveNumber"
-        android:layout_width="14dp"
-        android:layout_height="22dp"
+        android:layout_width="28dp"
+        android:layout_height="23dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"

@@ -1,5 +1,7 @@
 package com.example.debralipton.lipton_feelsbook;
 
+import android.widget.Toast;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,11 +40,15 @@ public abstract class Feels implements Feeling {
     public String getEmotion() {return this.emotion;}
     public String getOutput() {return this.output;}
 
-    public void setComment(String comment) {
-
-        this.comment = comment;
-        this.output = (dateString + "\n" + emotion + " - "+ comment);
+    public void setComment(String comment) throws CommentTooLongException {
+        if (comment.length() <= 100) {
+            this.comment = comment;
+            this.output = (dateString + "\n" + emotion + " - " + comment);
+        } else {
+            throw new CommentTooLongException();
+        }
     }
+
     public void setEmotion(String emotion) {
 
         this.emotion = emotion;

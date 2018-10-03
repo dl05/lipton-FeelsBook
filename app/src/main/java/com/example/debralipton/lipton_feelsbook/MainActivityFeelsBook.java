@@ -43,7 +43,8 @@ public class MainActivityFeelsBook extends AppCompatActivity {
     private static final String FILENAME = "file.sav";
     private EditText bodyText;
     private ListView feelingHistory;
-    boolean loveCheck = false;
+    //boolean loveCheck = false;
+    //final TextView loveCount = (TextView) findViewById(R.id.loveNumber);
 
     ArrayList<Feels> feelingList;
     ArrayAdapter<Feels> adapter;
@@ -57,7 +58,6 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         Button submitButton = (Button) findViewById(R.id.submitButton);
 
         final CheckBox LoveCheck = (CheckBox) findViewById(R.id.LoveBox);
-        final TextView loveCount = (TextView) findViewById(R.id.loveNumber);
         final CheckBox JoyCheck = (CheckBox) findViewById(R.id.JoyBox);
         CheckBox FearBox = (CheckBox) findViewById(R.id.FearBox);
         CheckBox AngerBox = (CheckBox) findViewById(R.id.AngerBox);
@@ -65,7 +65,9 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         CheckBox SurpriseBox = (CheckBox) findViewById(R.id.SurpriseBox);
 
 
+
         feelingHistory = (ListView) findViewById(R.id.feelingHistory);
+
 /*
         LoveBox.setOnClickListener(new View.OnClickListener() {
                                        public void onClick(View v) {
@@ -85,13 +87,22 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 setResult(RESULT_OK);
                 String text = bodyText.getText().toString();
 
+                if (text.length()>100) {
+                    Toast.makeText(MainActivityFeelsBook.this, "Comment must be less than 100 characters",
+                            Toast.LENGTH_LONG).show();
+                    LoveCheck.setChecked(false);
+                    bodyText.getText().clear();
+                }
+
                 if(LoveCheck.isChecked()) {
                     Feels newFeeling = new Love(text, "Love");
                     feelingList.add(newFeeling);
+                    countEmotion("Love");
                     //int num = Collections.frequency(feelingList, "Love");
-                    //loveCount.setText(Integer.toString(num));
+                    //int loveNum = countEmotion("Love");
+                    //loveCount.setText(Integer.toString(loveNum));
                     //loveCount.setText(R.string.loveNumber);
-                    //System.out.println(num);
+                    //System.out.println("Number of love: " + loveNum);
                     LoveCheck.setChecked(false);
                 }
                 if(JoyCheck.isChecked()) {
@@ -101,6 +112,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 }
 
                 //tell adapter that something has changed to refresh list
+                Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 bodyText.getText().clear();
                 saveInFile();
                 adapter.notifyDataSetChanged();
@@ -151,6 +163,9 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         loadFromFile();
         adapter = new ArrayAdapter<Feels>(this, R.layout.activity_display, feelingList);
         feelingHistory.setAdapter(adapter);
+        countEmotion("Love");
+        System.out.println("onStart: " + feelingList);
+
     }
 
     private String[] loadFromFile() {
@@ -214,7 +229,12 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 //System.out.println("old comment" + oldComment.toString());
                 //System.out.println("comment " + comment.getText().toString());
                 //feeling.setComment(newComment);
-                feelingList.get(index).setComment(comment.getText().toString());
+                try {
+                    feelingList.get(index).setComment(comment.getText().toString());
+                } catch (CommentTooLongException e) {
+                    Toast.makeText(MainActivityFeelsBook.this, "Comment must be less than 100 characters", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
                 feelingList.get(index).setEmotion(emotion.getText().toString());
                 feelingList.get(index).setDate(newDate.getText().toString());
                 //System.out.println("Feeling is now: " + feeling.getEmotion());
@@ -247,10 +267,31 @@ public class MainActivityFeelsBook extends AppCompatActivity {
 
     }
 
-    public void update() {
+    public void countEmotion(String emotion) {
+        int count=0;
+        int i;
+        System.out.println("feeling size" + feelingList.size());
+        for (i=0;i<feelingList.size(); i++){
+            System.out.println("i is : " +i);
+            System.out.println(feelingList.get(i));
+            System.out.println("Emotion is: "+feelingList.get(i).getEmotion());
+            System.out.println("Match is: " + feelingList.get(i).getEmotion().trim().equals(emotion));
 
-        int num = Collections.frequency(feelingList, "Love");
-        System.out.println("Love # " + num);
+            if (feelingList.get(i).getEmotion().trim().equals(emotion)) {
+                count++;
+                System.out.println("Count: " + count);
+            }
+        }
+        update(emotion, count);
+    }
+
+    public void update(String emotion, int count) {
+        final TextView loveCount = (TextView) findViewById(R.id.loveNumber);
+
+        switch (emotion) {
+            case "Love":
+                loveCount.setText(Integer.toString(count));
+        }
         adapter.notifyDataSetChanged();
         saveInFile();
 

@@ -30,7 +30,7 @@ public abstract class Feels implements Feeling {
         this.dateString = dateFormat.format(date);
         this.comment = comment;
         this.emotion = emotion;
-        this.output = (this.dateString + "\n" + emotion + " - "+ comment);
+        this.output = (this.dateString + " - " + this.emotion  + "\n" + this.comment);
 
     }
 
@@ -42,8 +42,9 @@ public abstract class Feels implements Feeling {
 
     public void setComment(String comment) throws CommentTooLongException {
         if (comment.length() <= 100) {
+            System.out.println("Comment length: " + comment.length());
             this.comment = comment;
-            this.output = (dateString + "\n" + emotion + " - " + comment);
+            this.output = (dateString + " - " + emotion + "\n" + comment);
         } else {
             throw new CommentTooLongException();
         }
@@ -52,12 +53,12 @@ public abstract class Feels implements Feeling {
     public void setEmotion(String emotion) {
 
         this.emotion = emotion;
-        this.output = (dateString + "\n" + emotion + " - "+ comment);
+        this.output = (dateString + " - " + emotion + "\n" + comment);
     }
 
     public void setDate(String date) {
         this.dateString = date;
-        this.output = (dateString + "\n" + emotion + " - "+ comment);
+        this.output = (dateString + " - " + emotion + "\n" + comment);
     }
 
     public String toString() {

@@ -23,7 +23,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:transcriptMode="alwaysScroll"
+        android:stackFromBottom="true">
 
     </ListView>
 
@@ -35,7 +37,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
-        android:hint="Optional Comment"
+        android:hint="Add comment to last emotion"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/submitButton"
@@ -83,8 +85,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
-        android:layout_marginLeft="190dp"
-        android:layout_marginStart="190dp"
+        android:layout_marginLeft="240dp"
+        android:layout_marginStart="240dp"
         android:text="Surprise"
         app:layout_constraintBottom_toTopOf="@+id/editComment"
         app:layout_constraintStart_toStartOf="parent" />
@@ -105,8 +107,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
-        android:layout_marginLeft="90dp"
-        android:layout_marginStart="90dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginStart="120dp"
         android:text="Sadness"
         app:layout_constraintBottom_toTopOf="@+id/editComment"
         app:layout_constraintStart_toStartOf="parent" />
@@ -115,9 +117,11 @@
         android:id="@+id/FearBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:text="Fear"
         app:layout_constraintBottom_toTopOf="@+id/SurpriseBox"
-        app:layout_constraintStart_toEndOf="@+id/JoyBox" />
+        app:layout_constraintStart_toEndOf="@+id/joyNumber" />
 
     <TextView
         android:id="@+id/textView2"
@@ -126,23 +130,80 @@
         android:layout_marginBottom="1dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="How do you feel today? :"
+        android:text="How do you feel today? : (Numbers show feeling count)"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/LoveBox"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/loveNumber"
-        android:layout_width="28dp"
-        android:layout_height="23dp"
+        android:layout_width="36dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/LoveBox"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintBottom_toTopOf="@+id/angerNumber"
+        app:layout_constraintStart_toEndOf="@+id/LoveBox" />
+
+    <TextView
+        android:id="@+id/joyNumber"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/sadnessNumber"
+        app:layout_constraintStart_toEndOf="@+id/JoyBox" />
+
+    <TextView
+        android:id="@+id/fearNumber"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintStart_toEndOf="@+id/FearBox" />
+
+    <TextView
+        android:id="@+id/angerNumber"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/AngerBox" />
+
+    <TextView
+        android:id="@+id/sadnessNumber"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/SadnessBox" />
+
+    <TextView
+        android:id="@+id/surpriseNumber"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/SurpriseBox" />
 
     <android.support.constraint.Barrier
         android:id="@+id/barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="left" />
+
+
 </android.support.constraint.ConstraintLayout>

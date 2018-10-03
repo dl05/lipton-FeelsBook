@@ -31,8 +31,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 public class MainActivityFeelsBook extends AppCompatActivity {
@@ -85,10 +88,11 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 if(LoveCheck.isChecked()) {
                     Feels newFeeling = new Love(text, "Love");
                     feelingList.add(newFeeling);
-                    int num = (newFeeling.getCount());
-                    loveCount.setText(Integer.toString(num));
-                    loveCount.setText(R.string.loveNumber);
-                    System.out.println("Love");
+                    //int num = Collections.frequency(feelingList, "Love");
+                    //loveCount.setText(Integer.toString(num));
+                    //loveCount.setText(R.string.loveNumber);
+                    //System.out.println(num);
+                    LoveCheck.setChecked(false);
                 }
                 if(JoyCheck.isChecked()) {
                     Feels newFeeling = new Joy(text, "Joy");
@@ -97,6 +101,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 }
 
                 //tell adapter that something has changed to refresh list
+                bodyText.getText().clear();
                 saveInFile();
                 adapter.notifyDataSetChanged();
 
@@ -105,7 +110,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
 
         feelingHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long id) {
                 Toast.makeText(MainActivityFeelsBook.this, "Edit/Delete Entry", Toast.LENGTH_LONG).show();
 
                 Feeling feeling = feelingList.get(position);
@@ -182,9 +187,15 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         editDel.setTitle("Edit/Delete");
         editDel.setContentView(R.layout.edit_delete);
         final Feels feeling = feelingList.get(index);
-        Date date = feeling.getDate();
-        final EditText Date = editDel.findViewById(R.id.changedate);
-        Date.setText(date.toString());
+
+        final String date = feeling.getDateString();
+        final EditText newDate = editDel.findViewById(R.id.changedate);
+        newDate.setText(date.toString());
+
+        //String newD = newDate.getText().toString();
+        //final Date upDate;
+        //upDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'").parse(newD);
+
 
         final String oldComment = feeling.getComment();
         final EditText comment = editDel.findViewById(R.id.changecomment);
@@ -200,16 +211,15 @@ public class MainActivityFeelsBook extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                String newComment = comment.getText().toString();
                 //System.out.println("old comment" + oldComment.toString());
-                System.out.println("comment " + comment.getText().toString());
-                feeling.setComment(newComment);
-                final Feels newFeels = feeling;
-                feelingList.get(index).setComment(newComment);
-                //feelingList.set(index, newFeels);
-                System.out.println("Feeling is now: " + feeling.getComment());
-                System.out.println("newFeels is now: " + newFeels.getComment());
-                System.out.println("List is:  " + feelingList);
+                //System.out.println("comment " + comment.getText().toString());
+                //feeling.setComment(newComment);
+                feelingList.get(index).setComment(comment.getText().toString());
+                feelingList.get(index).setEmotion(emotion.getText().toString());
+                feelingList.get(index).setDate(newDate.getText().toString());
+                //System.out.println("Feeling is now: " + feeling.getEmotion());
+                //System.out.println("Feeling.get is now: " + feelingList.get(index).getComment());
+                //System.out.println("List is:  " + feelingList);
                 //feelingList.set(index, (Feels) Date.getText());
                 //feelingList.set(index, (Feels) emotion.getText());
                 adapter.notifyDataSetChanged();
@@ -234,6 +244,15 @@ public class MainActivityFeelsBook extends AppCompatActivity {
             }
         });
         editDel.show();
+
+    }
+
+    public void update() {
+
+        int num = Collections.frequency(feelingList, "Love");
+        System.out.println("Love # " + num);
+        adapter.notifyDataSetChanged();
+        saveInFile();
 
     }
 }

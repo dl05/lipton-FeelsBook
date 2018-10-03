@@ -5,5 +5,6 @@ import java.util.Date;
 public interface Feeling {
     public Date getDate();
     public String getComment();
+    public String getDateString();
 
 }

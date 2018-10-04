@@ -15,6 +15,6 @@ Abram Hindle, Student Picker for Android: 5 Controllers and adding students, htt
 
 Abram Hindle, Student Picker for Android: 6 ListView, ArrayAdapter and Observer Pattern,https://www.youtube.com/watch?v=7zKCuqScaRE, 2014-09-13, retrieved 2018-09-29
 
-joshua2ua, lonelyTwitter, https://github.com/joshua2ua/lonelyTwitter, 2015-09-14, retrieved date: 2018-09-29
+Joshua Charles Campbell, joshua2ua, lonelyTwitter, https://github.com/joshua2ua/lonelyTwitter, 2015-09-14, retrieved date: 2018-09-29
 
 Atif Mahmood, Android-java- How to sort a list of objects by a certain value within the object, https://stackoverflow.com/questions/9109890/android-java-how-to-sort-a-list-of-objects-by-a-certain-value-within-the-object,  2012-12-11, retrieved date: 2018-10-03

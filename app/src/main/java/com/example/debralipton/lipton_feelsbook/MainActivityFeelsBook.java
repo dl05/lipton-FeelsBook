@@ -73,7 +73,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 countEmotion("Love");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 LoveCheck.setChecked(false);
-                update();
+                updateProgram();
                                        }
                                    });
 
@@ -85,7 +85,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 countEmotion("Joy");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 JoyCheck.setChecked(false);
-                update();
+                updateProgram();
             }
         });
 
@@ -97,7 +97,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 countEmotion("Surprise");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 SurpriseCheck.setChecked(false);
-                update();
+                updateProgram();
             }
         });
 
@@ -109,7 +109,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 countEmotion("Sadness");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 SadnessCheck.setChecked(false);
-                update();
+                updateProgram();
             }
         });
 
@@ -121,7 +121,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 countEmotion("Angry");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 AngerCheck.setChecked(false);
-                update();
+                updateProgram();
             }
         });
 
@@ -133,7 +133,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 countEmotion("Fear");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 FearCheck.setChecked(false);
-                update();
+                updateProgram();
             }
         });
 
@@ -144,7 +144,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 String text = bodyText.getText().toString();
 
                 try {
-                    feelingList.get(feelingList.size()-1).setComment(text);
+                    feelingList.get(0).setComment(text);
                     Toast.makeText(MainActivityFeelsBook.this, "Comment has been added to last entry",
                             Toast.LENGTH_LONG).show();
                     bodyText.getText().clear();
@@ -156,7 +156,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
 
                 //tell adapter that something has changed to refresh list
                 bodyText.getText().clear();
-                update();
+                updateProgram();
 
             }
         });
@@ -270,7 +270,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 countEmotion(oldEmotion);
                 countEmotion(emotion.getText().toString());
                 //sortFeelings();
-                update();
+                updateProgram();
                 editDel.dismiss();
 
             }
@@ -282,7 +282,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 setResult(RESULT_OK);
                 feelingList.remove(feeling);
                 countEmotion(feeling.getEmotion().toString());
-                update();
+                updateProgram();
                 editDel.dismiss();
             }
         });
@@ -298,10 +298,10 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 count++;
             }
         }
-        update(emotion, count);
+        updateCount(emotion, count);
     }
 
-    public void update(String emotion, int count) {
+    public void updateCount(String emotion, int count) {
         final TextView loveCount = (TextView) findViewById(R.id.loveNumber);
         final TextView sadCount = (TextView) findViewById(R.id.sadnessNumber);
         final TextView angerCount = (TextView) findViewById(R.id.angerNumber);
@@ -329,7 +329,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 joyCount.setText(Integer.toString(count));
                 break;
         }
-        update();
+        updateProgram();
 
     }
 
@@ -341,7 +341,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         });
     }
 
-    public void update() {
+    public void updateProgram() {
         sortFeelings();
         adapter.notifyDataSetChanged();
         saveInFile();

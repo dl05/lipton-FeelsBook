@@ -1,9 +1,8 @@
 package com.example.debralipton.lipton_feelsbook;
 
-public class Joy extends Feels {
+public class Surprise extends Feels {
 
-
-    public Joy(String comment, String emotion) {
+    public Surprise(String comment, String emotion) {
         super(comment, emotion);
 
     }

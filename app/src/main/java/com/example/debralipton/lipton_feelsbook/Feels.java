@@ -1,20 +1,14 @@
 package com.example.debralipton.lipton_feelsbook;
 
-import android.widget.Toast;
-
-import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public abstract class Feels implements Feeling {
     private Date date;
     private String dateString;
-    //private DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
     private String comment;
     private String emotion;
     private String output;
-    private int count;
 
     Feels() {
         date = new Date();
@@ -64,6 +58,5 @@ public abstract class Feels implements Feeling {
     public String toString() {
         return this.getOutput();
     }
-    public int getCount() {return this.count;}
 
 }

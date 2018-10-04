@@ -1,3 +1,9 @@
+/**
+ * This is the main activity for FeelsBook.
+ * The app allows the user to record an emotion and add an optional comment
+ * Emotions, comments and dates may edited or deleted after being entered
+ * The counts of each emotion entered are displayed next to the emotion checkboxes
+ */
 package com.example.debralipton.lipton_feelsbook;
 
 import android.app.Dialog;
@@ -6,7 +12,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,8 +44,6 @@ public class MainActivityFeelsBook extends AppCompatActivity {
     private static final String FILENAME = "file.sav";
     private EditText bodyText;
     private ListView feelingHistory;
-    //boolean loveCheck = false;
-    //final TextView loveCount = (TextView) findViewById(R.id.loveNumber);
 
     ArrayList<Feels> feelingList;
     ArrayAdapter<Feels> adapter;
@@ -70,8 +73,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 countEmotion("Love");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 LoveCheck.setChecked(false);
-                saveInFile();
-                adapter.notifyDataSetChanged();
+                update();
                                        }
                                    });
 
@@ -83,60 +85,55 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 countEmotion("Joy");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 JoyCheck.setChecked(false);
-                saveInFile();
-                adapter.notifyDataSetChanged();
+                update();
             }
         });
 
         SurpriseCheck.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                Feels newFeeling = new Love("", "Surprise");
+                Feels newFeeling = new Surprise("", "Surprise");
                 feelingList.add(newFeeling);
                 countEmotion("Surprise");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 SurpriseCheck.setChecked(false);
-                saveInFile();
-                adapter.notifyDataSetChanged();
+                update();
             }
         });
 
         SadnessCheck.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                Feels newFeeling = new Love("", "Sadness");
+                Feels newFeeling = new Sadness("", "Sadness");
                 feelingList.add(newFeeling);
                 countEmotion("Sadness");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 SadnessCheck.setChecked(false);
-                saveInFile();
-                adapter.notifyDataSetChanged();
+                update();
             }
         });
 
         AngerCheck.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                Feels newFeeling = new Love("", "Angry");
+                Feels newFeeling = new Anger("", "Angry");
                 feelingList.add(newFeeling);
                 countEmotion("Angry");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 AngerCheck.setChecked(false);
-                saveInFile();
-                adapter.notifyDataSetChanged();
+                update();
             }
         });
 
         FearCheck.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                Feels newFeeling = new Love("", "Fear");
+                Feels newFeeling = new Fear("", "Fear");
                 feelingList.add(newFeeling);
                 countEmotion("Fear");
                 Toast.makeText(MainActivityFeelsBook.this, "Your Feeling has been recorded!", Toast.LENGTH_LONG).show();
                 FearCheck.setChecked(false);
-                saveInFile();
-                adapter.notifyDataSetChanged();
+                update();
             }
         });
 
@@ -159,8 +156,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
 
                 //tell adapter that something has changed to refresh list
                 bodyText.getText().clear();
-                saveInFile();
-                adapter.notifyDataSetChanged();
+                update();
 
             }
         });
@@ -180,9 +176,6 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         System.out.println(feelingList);
                         EditDelete(finalPosition);
-                        //Feeling feeling = feelingList.get(finalPosition);
-                        //feelingList.remove(feeling);
-                        //System.out.println(feelingList);
                     }
                 });
 
@@ -192,9 +185,6 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                     }
                 });
                 adb.show();
-                System.out.println(feeling);
-                //saveInFile();
-                //adapter.notifyDataSetChanged();
                 return false;
             }
         });
@@ -210,11 +200,9 @@ public class MainActivityFeelsBook extends AppCompatActivity {
         countEmotion("Love");
         countEmotion("Joy");
         countEmotion("Fear");
-        countEmotion("Anger");
+        countEmotion("Angry");
         countEmotion("Surprise");
         countEmotion("Sadness");
-        System.out.println("onStart: " + feelingList);
-
     }
 
     private String[] loadFromFile() {
@@ -270,29 +258,19 @@ public class MainActivityFeelsBook extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                //System.out.println("old comment" + oldComment.toString());
-                //System.out.println("comment " + comment.getText().toString());
-                //feeling.setComment(newComment);
                 try {
                     feelingList.get(index).setComment(comment.getText().toString());
                 } catch (CommentTooLongException e) {
                     Toast.makeText(MainActivityFeelsBook.this, "Comment must be less than 100 characters", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-                //String oldFeeling = feelingList.get(index).getEmotion().toString();
+
                 feelingList.get(index).setEmotion(emotion.getText().toString());
                 feelingList.get(index).setDate(newDate.getText().toString());
-                //System.out.println("Feeling is now: " + feeling.getEmotion());
-                //System.out.println("Feeling.get is now: " + feelingList.get(index).getComment());
-                //System.out.println("List is:  " + feelingList);
-                //feelingList.set(index, (Feels) Date.getText());
-                //feelingList.set(index, (Feels) emotion.getText());
                 countEmotion(oldEmotion);
                 countEmotion(emotion.getText().toString());
-                sortFeelings();
-                adapter.notifyDataSetChanged();
-                saveInFile();
-                System.out.println(feelingList);
+                //sortFeelings();
+                update();
                 editDel.dismiss();
 
             }
@@ -304,9 +282,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 setResult(RESULT_OK);
                 feelingList.remove(feeling);
                 countEmotion(feeling.getEmotion().toString());
-                adapter.notifyDataSetChanged();
-                saveInFile();
-                System.out.println(feelingList);
+                update();
                 editDel.dismiss();
             }
         });
@@ -316,16 +292,10 @@ public class MainActivityFeelsBook extends AppCompatActivity {
     public void countEmotion(String emotion) {
         int count=0;
         int i;
-        System.out.println("feeling size" + feelingList.size());
-        for (i=0;i<feelingList.size(); i++){
-            System.out.println("i is : " +i);
-            System.out.println(feelingList.get(i));
-            System.out.println("Emotion is: "+feelingList.get(i).getEmotion());
-            System.out.println("Match is: " + feelingList.get(i).getEmotion().trim().equals(emotion));
 
+        for (i=0;i<feelingList.size(); i++){
             if (feelingList.get(i).getEmotion().trim().equals(emotion)) {
                 count++;
-                System.out.println("Count: " + count);
             }
         }
         update(emotion, count);
@@ -341,41 +311,40 @@ public class MainActivityFeelsBook extends AppCompatActivity {
 
         switch (emotion) {
             case "Love":
-                System.out.println("Updating Love to: "+count);
                 loveCount.setText(Integer.toString(count));
                 break;
             case "Sadness":
-                System.out.println("Updating Sad to: "+count);
                 sadCount.setText(Integer.toString(count));
                 break;
-            case "Anger":
-                System.out.println("Updating Anger to: "+count);
+            case "Angry":
                 angerCount.setText(Integer.toString(count));
                 break;
             case "Fear":
-                System.out.println("Updating Fear to: "+count);
                 fearCount.setText(Integer.toString(count));
                 break;
             case "Surprise":
-                System.out.println("Updating Surprise to: "+count);
                 surpriseCount.setText(Integer.toString(count));
                 break;
             case "Joy":
-                System.out.println("Updating Joy to: "+count);
                 joyCount.setText(Integer.toString(count));
                 break;
         }
-        adapter.notifyDataSetChanged();
-        saveInFile();
+        update();
 
     }
 
     public void sortFeelings() {
         Collections.sort(feelingList, new Comparator<Feeling>(){
-            public int compare(Feeling obj1, Feeling obj2) {
+            public int compare(Feeling obj2, Feeling obj1) {
                 return obj1.getDateString().compareToIgnoreCase(obj2.getDateString()); // To compare string values
             }
         });
+    }
+
+    public void update() {
+        sortFeelings();
+        adapter.notifyDataSetChanged();
+        saveInFile();
     }
 
 }

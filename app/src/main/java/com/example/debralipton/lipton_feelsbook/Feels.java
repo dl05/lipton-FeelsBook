@@ -18,7 +18,7 @@ public abstract class Feels implements Feeling {
 
     Feels() {
         date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd'T'hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
         this.dateString = dateFormat.format(date);
         this.comment = "";
         this.emotion = "emotion";
@@ -26,7 +26,7 @@ public abstract class Feels implements Feeling {
 
     Feels(String comment, String emotion) {
         date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd'T'hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
         this.dateString = dateFormat.format(date);
         this.comment = comment;
         this.emotion = emotion;

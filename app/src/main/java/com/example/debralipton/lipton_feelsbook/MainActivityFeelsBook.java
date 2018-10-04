@@ -373,7 +373,6 @@ public class MainActivityFeelsBook extends AppCompatActivity {
     public void sortFeelings() {
         Collections.sort(feelingList, new Comparator<Feeling>(){
             public int compare(Feeling obj1, Feeling obj2) {
-                // https://stackoverflow.com/questions/9109890/android-java-how-to-sort-a-list-of-objects-by-a-certain-value-within-the-object
                 return obj1.getDateString().compareToIgnoreCase(obj2.getDateString()); // To compare string values
             }
         });

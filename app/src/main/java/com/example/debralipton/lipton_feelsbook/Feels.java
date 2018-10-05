@@ -36,7 +36,6 @@ public abstract class Feels implements Feeling {
 
     public void setComment(String comment) throws CommentTooLongException {
         if (comment.length() <= 100) {
-            System.out.println("Comment length: " + comment.length());
             this.comment = comment;
             this.output = (dateString + " - " + emotion + "\n" + comment);
         } else {

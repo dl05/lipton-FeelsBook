@@ -3,9 +3,9 @@
 FeelsBook application allows a user to enter emotions. Emotions are timestamped. After an emotion is recored, a comment may be added to an emotion. Emotions, comments and dates can be updated after an emotion is added. The app displays the count for each emotion entered. Emotion history is displayed on the main page of the app. 
 
 Students consulted:
-Apu 
-Omer 
-Ian 
+Md Touhidul (Apu) Islam
+Muhammad Khan
+Ian Seng Wok
 
 Resources Used: 
 

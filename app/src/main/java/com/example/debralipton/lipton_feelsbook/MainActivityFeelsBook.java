@@ -159,6 +159,7 @@ public class MainActivityFeelsBook extends AppCompatActivity {
                 updateProgram();
 
             }
+
         });
 
         feelingHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
